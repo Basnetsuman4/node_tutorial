@@ -13,6 +13,7 @@ app.get("/", (req, res) => {
 app.use("/user", router);
 
 app.use(express.json());
+
 app.post("/user", (req, res) => {
 	const { name, email } = req.body;
 	res.json({
@@ -28,6 +29,19 @@ app.put("/user/:id", (req, res) => {
 	const { name, email } = req.body;
 	res.json({
 		message: `User ${userId} updated to ${name}, ${email}.`,
+	});
+	console.log({
+		message: `User ${userId} updated to ${name}, ${email}.`,
+	});
+});
+
+app.delete("/user/:id", (req, res) => {
+	const userId = req.params.id;
+	res.json({
+		message: `User id ${userId} deleted.`,
+	});
+	console.log({
+		message: `User id ${userId} deleted.`,
 	});
 });
 
