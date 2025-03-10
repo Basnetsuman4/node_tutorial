@@ -1,50 +1,19 @@
 import express from "express";
-import { userLogin, userSignUp } from "./controller.js";
-import router from "./route.js";
 
 const app = express();
-
-const PORT = 3000;
-
-app.get("/", (req, res) => {
-	res.send("Hello World");
-});
-
-app.use("/user", router);
-
 app.use(express.json());
 
-app.post("/user", (req, res) => {
-	const { name, email } = req.body;
-	res.json({
-		message: `User: ${name} with email: ${email} created successfully`,
-	});
-	console.log({
-		message: `User: ${name} with email: ${email} created successfully`,
-	});
+const PORT = 9000;
+
+app.get("/things/:name/:id", (req, res) => {
+	const { name, id } = req.params;
+	res.json({ id, name });
 });
 
-app.put("/user/:id", (req, res) => {
-	const userId = req.params.id;
-	const { name, email } = req.body;
-	res.json({
-		message: `User ${userId} updated to ${name}, ${email}.`,
-	});
-	console.log({
-		message: `User ${userId} updated to ${name}, ${email}.`,
-	});
-});
-
-app.delete("/user/:id", (req, res) => {
-	const userId = req.params.id;
-	res.json({
-		message: `User id ${userId} deleted.`,
-	});
-	console.log({
-		message: `User id ${userId} deleted.`,
-	});
+app.get("*", (req, res) => {
+	res.status(404).json({ message: `${req.url}  not found` });
 });
 
 app.listen(PORT, () => {
-	console.log(`Server is running on port ${PORT}`);
+	console.log(`Server is running on port 🚩🚩 ${PORT}`);
 });
