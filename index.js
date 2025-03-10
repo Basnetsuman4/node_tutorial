@@ -5,7 +5,7 @@ app.use(express.json());
 
 const PORT = 9000;
 
-app.get("/things/:name/:id", (req, res) => {
+app.get("/things/:name/:id([0-9]{5})", (req, res) => {
 	const { name, id } = req.params;
 	res.json({ id, name });
 });
