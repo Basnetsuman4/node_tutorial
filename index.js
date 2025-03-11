@@ -3,7 +3,15 @@ import multer from "multer";
 
 const app = express();
 app.use(express.json());
-const upload = multer();
+
+// Create a storage object with a given configuration
+const storage = multer.diskStorage({
+	destination: "upload",
+	filename: (req, file, cb) => {
+		cb(null, file.fieldname + Date.now() + file.originalname);
+	},
+});
+const upload = multer({ storage: storage, limits: { fileSize: 120040 } });
 const PORT = 9000;
 
 app.use(express.urlencoded({ extended: true }));
