@@ -1,22 +1,22 @@
 import express from "express";
+import multer from "multer";
 
 const app = express();
 app.use(express.json());
-
+const upload = multer();
 const PORT = 9000;
 
-app.use(express.static("public"));
+app.use(express.urlencoded({ extended: true }));
+app.use(upload.single("file"));
 
-app.use("/images", express.static("images"));
 app.get("/", (req, res) => {
 	res.send(`Hello Express`);
 });
 
-// Catching all invalid route
-app.get("*", (req, res) => {
-	res
-		.status(404)
-		.json({ message: `${req.url}  not found, look for available route!!!` });
+app.post("/form", (req, res) => {
+	console.log(req.body);
+	console.log(req.file);
+	res.send("Form submitted successfully");
 });
 
 app.listen(PORT, () => {
