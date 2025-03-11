@@ -2,16 +2,29 @@ import express from "express";
 
 const app = express();
 app.use(express.json());
-
+app.use((req, res, next) => {
+	console.log("     [ A new request received at ] : " + Date.now());
+	next();
+});
 const PORT = 9000;
 
-app.get("/things/:name/:id([0-9]{5})", (req, res) => {
-	const { name, id } = req.params;
-	res.json({ id, name });
+app.use("/hawa", (req, res, next) => {
+	console.log("Hawa is here");
+	next();
 });
 
+app.get("/", (req, res) => {
+	res.send("Welcome to our API");
+});
+app.get("/hawa", (req, res) => {
+	res.send("Welcome to our API from hawa");
+});
+
+// Catching all invalid route
 app.get("*", (req, res) => {
-	res.status(404).json({ message: `${req.url}  not found` });
+	res
+		.status(404)
+		.json({ message: `${req.url}  not found, look for available route!!!` });
 });
 
 app.listen(PORT, () => {
