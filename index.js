@@ -5,12 +5,11 @@ app.use(express.json());
 
 const PORT = 9000;
 
-// Set EJS as the view engine
-app.set("view engine", "ejs");
+app.use(express.static("public"));
 
+app.use("/images", express.static("images"));
 app.get("/", (req, res) => {
-	const userName = "John Doe";
-	res.render(`index`, { userName });
+	res.send(`Hello Express`);
 });
 
 // Catching all invalid route
